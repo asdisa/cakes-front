@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-16; IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cakes</title>
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/pacifico-font.css">
+      <link rel="stylesheet" type="text/css" href="css/my-css.css">
+
+</head>
+<body>
+  <nav class="navbar navbar-default navbar-fixed-top">  <div class="container-fluid">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="https://cakes.abra.me/">Тортики</a>
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li><a href="https://cakes.abra.me/"> Все рецепты <span class="sr-only">(current)</span></a></li>
+          <li class="active"><a href="https://cakes.abra.me/categories">Категории<span class="sr-only">(current)</span></a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="https://cakes.abra.me/add">Добавить рецепт<span class="sr-only">(current)</span></a></li>
+          <li><a href="https://cakes.abra.me/add_cost">Добавить стоимость<span class="sr-only">(current)</span></a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+  <br>
+  <br>
+  <br>
+  <div class="container" data-bind="with: recipe">
+    <div class="jumbotron">
+      <img data-bind="attr:{src: imgSm}, visible: hasImg">
+      <form enctype="multipart/form-data">
+        <input name="file" type="file"/>
+        <input type="button" value="Upload" data-bind="click: $parent.loadImg"/>
+      </form>
+    </div>
+  </div>
+ <br><br>
+
+  <div class="container" data-bind="with: recipe">
+    <div class="jumbotron">
+      <div class="row">
+        <div class="col-xs-6">
+          <p>
+            <input type="text" 
+            class="form-control"
+            placeholder= "Название рецепта" 
+            data-bind="textInput: title">
+          </p>
+        </div>  
+      </div> <!--row-->
+  <br>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="input-group input-group">
+            <span class="input-group-addon" id="sizing-addon2">Ингредиенты</span>
+            <div>
+              <button type="button" 
+                      class="btn btn-add"
+                      data-bind="click: $root.addIngredient">
+              <span class="glyphicon glyphicon-plus" 
+                    aria-hidden="true"></span></button>
+            </div> 
+          </div>
+        </div>
+      </div>  
+      <p></p>
+      <div data-bind="foreach: ingredients">
+      <p></p>
+        <div class="row">
+          <div class="col-xs-5">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Название ингредиента" 
+                   data-bind="textInput: name">
+          </div>
+
+        
+          <div class="col-xs-2">
+            <input type="text" 
+                       class="form-control" 
+                       placeholder="Количество" 
+                       data-bind="textInput: quantityUnits">  
+          </div>
+
+          <div class="col-xs-2">
+              <select class="form-control"
+                      data-bind="options: avaliableUnits,
+                                 optionsText: 'unitName',
+                                 value: selectedUnit">
+              </select>  
+          </div>
+
+          <div class="col-xs-2">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Cтоимость" 
+                   data-bind="textInput: cost">
+          </div>
+
+          <div class="col-xs-1">
+            <button type="button" 
+                    class="btn btn-close"
+                    data-bind="click: $root.removeIngredient">
+            <span class="glyphicon glyphicon-remove"></span>
+            </button>
+          </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-2 col-xs-offset-5">
+          <input type="text" 
+               class="form-control" 
+               placeholder="грамм/шт" 
+               data-bind="visible: grammPerUnitInputShown, 
+                          textInput: grammPerUnit">
+
+        </div>
+      </div> 
+    </div>  
+
+    <br>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group input-group">
+          <span class="input-group-addon" id="sizing-addon2">Шаги</span>
+          <div>
+            <button type="button" 
+            class="btn btn-add"
+            data-bind="click: $root.addStep">
+            <span class="glyphicon glyphicon-plus" 
+            aria-hidden="true"></span></button>
+          </div> 
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row" data-bind="foreach: steps">
+      <p></p>
+      <form>
+          <div class="col-xs-11">
+          <textarea input-type="text" 
+                    style="width:100%"
+                    rows="4" 
+                    id="TITLE" 
+                    data-bind="textInput: textInput"></textarea>
+          </div>  
+        <div class="col-xs-1">
+          <button type="button" 
+                  class="btn btn-close"
+                  data-bind="click: $root.removeStep">
+          <span class="glyphicon glyphicon-remove"></span></button>
+        </div>  
+
+      </form>
+    </div>
+    
+    <br>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="input-group input-group">
+          <span class="input-group-addon" id="sizing-addon2">Теги</span>
+          <div>
+            <button type="button" 
+            class="btn btn-add"
+            data-bind="click: $root.addTag">
+            <span class="glyphicon glyphicon-plus" 
+            aria-hidden="true"></span></button>
+          </div> 
+        </div>
+      </div>
+    </div>  
+
+
+
+
+
+
+
+    <div class="row" data-bind="foreach: tags">
+      <p></p>
+      <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6" >
+        <div class="input-group">
+        <input type="text" 
+               class="form-control" 
+               placeholder="#тег" 
+               data-bind="textInput: text"> 
+        <span class = "input-group-btn">
+          <button class = "btn btn-close" 
+                  type = "button"
+                  data-bind="click: $root.removeTag">
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
+        </span>
+        </div><!-- /input-group -->
+      </div>  
+    </div>  
+                
+    <br>
+    <div class="row">
+      <div class="col-xs-2">
+    <button type="button" 
+            class="btn btn-warning"
+            data-bind="click: $root.changeRecipe">
+      Изменить</button>      </div>  
+      <div class="col-xs-2">
+    <button type="button" 
+            class="btn btn-danger"
+            data-bind="click: $root.deleteRecipe">
+      Удалить</button>      </div>  
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="js/lib/jquery.js"></script>
+    <script src="js/lib/knockout-3.2.0.js"></script>
+    <script src="js/lib/bootstrap.min.js"></script>
+    <script src="js/change.js"></script>
+</body>
+</html>

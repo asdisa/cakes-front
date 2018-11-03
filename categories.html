@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-16; IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Категории</title>
+
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="css/pacifico-font.css">
+  <link rel="stylesheet" type="text/css" href="css/my-css.css">
+</head>
+
+<body>
+  <br>
+  <p></p>
+
+    <nav class="navbar navbar-default navbar-fixed-top">  <div class="container-fluid">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="https://cakes.abra.me/">Тортики</a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="https://cakes.abra.me/"> Все рецепты <span class="sr-only">(current)</span></a></li>
+            <li class="active"><a href="https://cakes.abra.me/categories">Категории<span class="sr-only">(current)</span></a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li ><a href="https://cakes.abra.me/add">Добавить рецепт<span class="sr-only">(current)</span></a></li>
+            <li><a href="https://cakes.abra.me/add_cost">Добавить стоимость<span class="sr-only">(current)</span></a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+  <br>
+
+    <br>
+
+    <div class="container">
+      <div class="jumbotron">
+        <div data-bind="foreach: tags">
+          <button class="btn btn-tag outline" 
+          data-bind="text: text, 
+          click: $root.onTagBtnClick, 
+          style: { backgroundColor: selected() ? '#FF416E' : 'white', 
+                   color: selected() ? 'white' : '#606060'}
+          "></button></a>
+        </div>
+      </div>
+    </div>
+
+    <br>
+
+    <div class="container">
+      <div class="row" data-bind="foreach: shownRecipes">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+          <div class="thumbnail">
+            <a data-bind="attr: {href: url}">
+              <img data-bind="attr:{src: imgLg}, visible: hasImg" alt="..." height="500"></a>
+              <div class="caption">
+                <a class="name-link" data-bind="attr: {href: url}">
+                  <h3 data-bind="text: title"></h3>
+                </a> 
+                <p data-bind="text: description"></p> 
+              </div>
+            </div>
+          </div>
+          <div class="clearfix  visible-xs-block"></div>
+        </div>
+      </div>
+
+
+
+
+  
+</div>  
+
+
+
+
+
+
+
+
+
+
+<script src="js/lib/jquery.js"></script>
+<script src="js/lib/knockout-3.2.0.js"></script>
+<script src="js/lib/bootstrap.min.js"></script>
+<script src="js/categories.js"></script>
+</body>
+</html>

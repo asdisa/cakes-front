@@ -1,0 +1,255 @@
+
+
+body  {
+  background-color: #E0E0E0;
+  background-image: url("../img/wall.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  word-wrap: break-word
+}
+
+img {
+    max-width: auto;
+    max-height: 250;
+    position: center;
+}
+
+.progress-bar-custom {
+  background-color: #FF416E;
+}
+
+.name-link {
+  color: #D1204A;
+}
+
+.name-link:hover {
+  color: #FF416E;
+}
+
+.btn-show-recipe {
+  background: #FF416E;
+  color: white;
+}
+
+
+
+.btn.outline {
+  background: #FFFFFF;
+  padding: 12px 22px;
+}
+
+.btn-change.outline {
+  border: 2px solid #FF8903;
+  color: #FF8903;
+
+}
+
+.btn-change.outline:hover, .btn-change.outline:focus, .btn-change.outline:active, .btn-change.outline.active, .open > .dropdown-toggle.btn-change {
+  border: 2px solid #FF9933;
+  color: #FF9933;
+}
+
+.btn-change.outline:active, .btn-change.outline.active {
+  border-color: #007299;
+  color: #007299;
+  box-shadow: none;
+}
+
+
+.btn-tag.outline {
+  padding: 6px 10px;
+  color: #606060;
+  border-color: #606060;
+}
+
+.btn-tag.outline:hover, .btn-tag.outline:focus, .btn-tag.outline:active, .btn-tag.outline.active, .open > .dropdown-toggle.btn-tag {
+  color: #FF416E;
+  border-color: #FF416E;
+}
+
+.btn-tag.outline:active, .btn-tag.outline.active {
+  border-color: #007299;
+  color: #007299;
+  box-shadow: none;
+}
+
+.btn-close{
+  padding: 6px 10px;
+  color: #9E1838;
+  background-color: #fff;
+  border-color: #9E1838;
+}
+
+.btn-close:hover, .btn-close:focus, .btn-close:active, .btn-close.active, .open > .dropdown-toggle.btn-close {
+  color: #FF416E;
+  border-color: #FF416E;
+}
+
+.btn-close:active, .btn-close.active {
+  border-color: #007299;
+  color: #007299;
+  box-shadow: none;
+}
+
+.input-group-addon {
+  border-color: #FF416E;
+  background-color: #fff;
+}
+
+.jumbotron {
+
+}
+
+.weight {
+  border-color: #FF416E;
+}
+
+.cost {
+  border-color: #FF416E;
+  background-color: #fff;
+}
+
+.btn-add {
+  padding: 6px 10px;
+  border-color: #FF416E; 
+  color: #FF416E;
+  background-color: #fff;+
+}
+
+.btn-add:hover, .btn-add:focus, .btn-add:active, .btn-add.active, .open > .dropdown-toggle.btn-add {
+  color: #FF416E;
+  border-color: #FF416E;
+}
+
+.btn-add:active, .btn-add.active {
+  border-color: #007299;
+  color: #007299;
+  box-shadow: none;
+}
+
+.btn-add-recipe {
+  padding: 6px 10px;
+  border-color: #9E1838; 
+  color: #9E1838;
+  background-color: #fff;
+}
+
+.btn-add-recipe:hover, .btn-add-recipe:focus, .btn-add-recipe:active, .btn-add-recipe.active, .open > .dropdown-toggle.btn-add-recipe {
+  color: #FF416E;
+  border-color: #FF416E;
+}
+
+.btn-add-recipe:active, .btn-add-recipe.active {
+  border-color: #007299;
+  color: #007299;
+  box-shadow: none;
+}
+
+
+.btn-show-recipe.outline {
+  border: 2px solid #9E1838;
+  color: #9E1838;
+}
+
+.btn-show-recipe.outline:hover, .btn-show-recipe.outline:focus, .btn-show-recipe.outline:active, .btn-show-recipe.outline.active, .open > .dropdown-toggle.btn-show-recipe {
+  color: #FF416E;
+  border-color: #FF416E;
+}
+
+.btn-show-recipe.outline:active, .btn-show-recipe.outline.active {
+  border-color: #FF416E;
+  color: #FF416E;
+  box-shadow: none;
+}
+
+
+.navbar-default {
+  background-color: #D1204A;
+  border-color: #c0392b;
+}
+.navbar-default .navbar-brand {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: #ffffff;
+}
+.navbar-default .navbar-text {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #ffffff;
+}
+.navbar-default .navbar-nav > li > .dropdown-menu {
+  background-color: #e74c3c;
+}
+.navbar-default .navbar-nav > li > .dropdown-menu > li > a {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-nav > li > .dropdown-menu > li > a:hover,
+.navbar-default .navbar-nav > li > .dropdown-menu > li > a:focus {
+  color: #ffffff;
+  background-color: #c0392b;
+}
+.navbar-default .navbar-nav > li > .dropdown-menu > li > .divider {
+  background-color: #c0392b;
+}
+.navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+.navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+.navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+  color: #ffffff;
+
+  background-color: #c0392b;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #ffffff;
+  background-color: #9E1838;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+  color: #ffffff;
+  background-color: #c0392b;
+}
+.navbar-default .navbar-toggle {
+  border-color: #c0392b;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  background-color: #c0392b;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #ecf0f1;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border-color: #ecf0f1;
+}
+.navbar-default .navbar-link {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-link:hover {
+  color: #ffffff;
+}
+
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: #ecf0f1;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #ffffff;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #ffffff;
+    background-color: #c0392b;
+  }
+}
