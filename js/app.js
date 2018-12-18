@@ -1,25 +1,26 @@
 
 $(document).ready(function() {	
 
-	var dataStr = JSON.stringify({"id": getUrlParameterDecodedValue("id")});
+	let payload = JSON.stringify({"id": getUrlParameterDecodedValue("id")});
+	const recipeBuilder = new RecipeBuilder()
 	$.ajax({
 		url: 'https://cakes.abra.me/api/v2/recipe/get',
 		type: 'POST',
 		dataType: 'json',
-		data: dataStr,
+		data: payload,
 		contentType: 'application/json'
 	}).done(function(data) {
-		if(data.status === "ok") {
-			var recipe = new Recipe(data.recipe);
-			console.log(recipe.totalCost());
+		if (data.status === "ok") {
+			let recipe = ko.observable(new Recipe(recipeBuilder.fromAbraSchema(data.recipe)));
 			VM = new ViewModel(recipe);
-			ko.applyBindings(VM);		}
+			ko.applyBindings(VM);		
+		}
 	});
 
 
 	var ViewModel = function(recipe) {
 		self = this;
-		this.recipe = ko.observable(recipe);
+		this.recipe = recipe;
 		this.showStepsBtnName = ko.computed(function() {
 			return this.recipe().stepsAreShown() ? "Скрыть рецепт" : "Показать рецепт"
 		}, this);		
