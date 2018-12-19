@@ -67,9 +67,23 @@ class Ingredinet {
     }
 }
 
+class RecipeCard {
+    constructor(recipeCardObj=null) {
+        this.id = ko.observable(recipeCardObj.id ? recipeCardObj.id : null);
+        this.url = ko.observable(`https://cakes.abra.me/recipe?id=${this.id()}`);
+        this.title = ko.observable(recipeCardObj.title);
+        this.imgSm = ko.observable(recipeCardObj.img_small ? `https://cakes.abra.me${recipeCardObj.img_small}` : null);
+        this.hasImg = ko.observable(this.imgSm != null);
+        this.tags = ko.observableArray();
+        
+        for (let tagObj of recipeCardObj.tags) {
+            this.tags.push(ko.observable(new Tag(tagObj)));
+        };
+    }
+}
+
 class Recipe {
     constructor(recipeObj=null) {
-        recipeObj = recipeObj();
         this.id = ko.observable(recipeObj.id ? recipeObj.id : null);
 	    this.url = ko.observable(`https://cakes.abra.me/recipe?id=${this.id()}`);
         this.title = ko.observable(recipeObj.title);
@@ -82,12 +96,12 @@ class Recipe {
         this.hasImg = ko.computed(() => this.imgSm !== undefined);
         this.tags = ko.observableArray();
         for (let tagObj of recipeObj.tags) {
-            this.tags.push(ko.observable(new Tag(tagObj())));
+            this.tags.push(ko.observable(new Tag(tagObj)));
         };
 
         this.steps = ko.observableArray();
-        for (let tagObj of recipeObj.steps) {
-            this.steps.push(ko.observable(new Step(tagObj())));
+        for (let stepObj of recipeObj.steps) {
+            this.steps.push(ko.observable(new Step(stepObj)));
         };
 
         this.basicWeight = ko.observable(0);	
@@ -105,13 +119,7 @@ class Recipe {
         this.totalQuantityGramsRepr = ko.computed(() => this.totalQuantityGrams());
 
         for (let ingredientObj of recipeObj.ingredients) {
-            console.log(ingredientObj())
-
-            let ingredient = ko.observable(new Ingredinet(ingredientObj(), this.basicWeight, this.totalQuantityGrams));
-
-            console.log('ingredient().currentQuantityUnits(): ', ingredient().currentQuantityUnits());
-            
-            //console.log('ingredient().currentQuantityUnits():', ingredient.currentQuantityUnits())
+           let ingredient = ko.observable(new Ingredinet(ingredientObj(), this.basicWeight, this.totalQuantityGrams));
 
             this.ingredients.push(ingredient);
             if (ingredient().progressBarVisible()) {

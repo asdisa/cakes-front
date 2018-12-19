@@ -4,7 +4,7 @@ class TagBuilder {
     fromAbraSchema(text) {
         let tagObj = new TagObj();
         tagObj.text = text;
-        return ko.observable(tagObj);
+        return tagObj;
     }
 
     toAbraSchema(tag) {
@@ -20,7 +20,7 @@ class StepBuilder {
         let stepObj = new StepObj();
         stepObj.ordinal = abraStep.ordinal;
         stepObj.text = abraStep.step;
-        return ko.observable(stepObj);
+        return stepObj;
     }
 
     toAbraSchema(step) {
@@ -59,6 +59,27 @@ class IngredientBuilder {
     }
 }
 
+class RecipeCardBuilder {
+    constructor() {
+        this.tagBuilder = new TagBuilder();
+    }
+
+    fromAbraSchema(abraRecipeCard) {
+        let recipeCardObj = new RecipeCardObj();
+        recipeCardObj.id = abraRecipeCard.id;
+        recipeCardObj.id = abraRecipeCard.id;
+        recipeCardObj.title = abraRecipeCard.title;
+        recipeCardObj.is_public = abraRecipeCard.is_public;
+        recipeCardObj.img_small = abraRecipeCard.img_small;
+
+        for (let abraTag of abraRecipeCard.tags) {
+            recipeCardObj.tags.push(this.tagBuilder.fromAbraSchema(abraTag));
+        }
+
+        return recipeCardObj;
+    }
+}
+
 class RecipeBuilder {
     constructor() {
         this.tagBuilder = new TagBuilder();
@@ -90,7 +111,7 @@ class RecipeBuilder {
         for (let abraIngredient of abraRecipe.ingredients) {
             recipeObj.ingredients.push(this.ingredientBuilder.fromAbraSchema(abraIngredient));
         }
-        return ko.observable(recipeObj);
+        return recipeObj;
     }
  
     toAbraSchema(recipe) {

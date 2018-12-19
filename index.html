@@ -30,13 +30,8 @@
         </button>
       </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="https://cakes.abra.me/"> Все рецепты <span class="sr-only">(current)</span></a></li>
-          <li><a href="https://cakes.abra.me/categories">Категории<span class="sr-only">(current)</span></a></li>
-        </ul>
         <ul class="nav navbar-nav navbar-right">
           <li ><a href="https://cakes.abra.me/add">Добавить рецепт<span class="sr-only">(current)</span></a></li>
-          <li><a href="https://cakes.abra.me/add_cost">Добавить стоимость<span class="sr-only">(current)</span></a></li>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
@@ -67,11 +62,11 @@
 
 <div class="btn-group btn-group-justified" 
      role="group" 
-     data-bind="visible: canAddRecipes">
+     data-bind="visible: canShowMoreRecipes">
   <div class="btn-group" role="group">
     <button type="button" 
             class="btn btn-lg btn-default"
-            data-bind="click: addRecipes">
+            data-bind="click: showMoreRecipes">
       <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></button>
   </div>
 </div>
@@ -82,11 +77,10 @@
   <script src="js/lib/jquery.js"></script>
   <script src="js/lib/knockout-3.2.0.js"></script>
   <script src="js/lib/bootstrap.min.js"></script>
-  <script src="js/components/tag.js"></script>
-  <script src="js/components/ingredient.js"></script>
-  <script src="js/components/step.js"></script>
-  <script src="js/components/recipe.js"></script>
   <script src="js/components/useful-functions.js"></script>
+  <script src="js/models/objects.js"></script>
+  <script src="js/models/ko_classes.js"></script>
+  <script src="js/models/object_builders.js"></script>
   <script src="js/main.js"></script>
 
 </body>

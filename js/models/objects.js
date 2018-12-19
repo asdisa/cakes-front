@@ -21,6 +21,16 @@ class IngredinetObj {
     }
 }
 
+class RecipeCardObj {
+    constructor() {
+        this.id = null;
+        this.title = '';
+        this.is_public = true;
+        this.img_small = null;
+        this.tags = [];
+    }
+}
+
 class RecipeObj {
     constructor() {
         this.id = null;
