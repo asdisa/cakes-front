@@ -2,8 +2,9 @@ class Tag {
     constructor(tagObj=null) {
         this.text = ko.observable(tagObj.text);
         this.repr = ko.observable(`#${tagObj.text}`);
+        this.selected = ko.observable(false);
         this.url = ko.observable("https://cakes.abra.me?tags=" + this.text().slice(1).split(" ").join("+"));
-    }
+    } 
 }
 
 class Step {
@@ -68,17 +69,27 @@ class Ingredinet {
 }
 
 class RecipeCard {
-    constructor(recipeCardObj=null) {
+    constructor(recipeCardObj=null, selectedTags) {
         this.id = ko.observable(recipeCardObj.id ? recipeCardObj.id : null);
         this.url = ko.observable(`https://cakes.abra.me/recipe?id=${this.id()}`);
         this.title = ko.observable(recipeCardObj.title);
         this.imgSm = ko.observable(recipeCardObj.img_small ? `https://cakes.abra.me${recipeCardObj.img_small}` : null);
         this.hasImg = ko.observable(this.imgSm != null);
         this.tags = ko.observableArray();
-        
+        this.visible = ko.computed(() => {
+            return this.tags().filter(tag => selectedTags().includes(tag().text())).length === selectedTags().length; 
+        });
+
         for (let tagObj of recipeCardObj.tags) {
             this.tags.push(ko.observable(new Tag(tagObj)));
         };
+        this.checkTags = ko.computed(() => {
+            for (let tag of this.tags()) {
+                if(selectedTags().includes(tag().text())){
+                    tag().selected(true);
+                } else { tag().selected(false); }
+            }
+        });
     }
 }
 

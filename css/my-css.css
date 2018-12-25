@@ -1,5 +1,12 @@
-
-
+.img-wrapper {
+  display: flex;
+  height: 200px;
+  width: auto;
+  overflow: hidden;
+}
+.field-for-title{
+  height: 60px;
+}
 body  {
   background-color: #E0E0E0;
   background-image: url("../img/wall.jpg");
@@ -94,10 +101,6 @@ img {
 .input-group-addon {
   border-color: #FF416E;
   background-color: #fff;
-}
-
-.jumbotron {
-
 }
 
 .weight {

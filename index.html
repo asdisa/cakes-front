@@ -41,16 +41,27 @@
 <br>
 <div class="container">
   <div class="row" data-bind="foreach: shownRecipes">
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" data-bind="visible: $data.visible">
       <div class="thumbnail" >
         <a data-bind="attr: {href: url}">
-          <img data-bind="attr:{src: imgSm}, visible: hasImg" alt="..."></a>
-        <div class="caption">
+          <div class="img-wrapper">
+            <img data-bind="attr:{src: imgSm}, visible: hasImg" alt="..." ></a>
+          </div>
+          <div class="caption">
+          <div class="field-for-title">
           <a class="name-link" data-bind="attr: {href: url}">
             <h3 data-bind="text: title"></h3>
-          </a> 
+          </a>
+          </div> 
           <div data-bind="foreach: tags">
-          <a data-bind="attr: { href: url}"><button class="btn btn-tag btn-sm outline" data-bind="text: text"></button></a>
+          <a data-bind="attr: { href: url}">
+            <button class="btn btn-tag btn-sm outline" 
+              data-bind="text: text, 
+                        style: { borderColor: selected() ? '#FF416E' : '#606060', 
+                                       color: selected() ? '#FF416E' : '#606060'}, 
+                        click: function(){$root.selectTag(text())}">
+
+            </button></a>
         </div>
         <br>          
         </div>
