@@ -1,9 +1,11 @@
+const domen = "http://0.0.0.0:8080";
+
 class Tag {
     constructor(tagObj=null) {
         this.text = ko.observable(tagObj.text);
         this.repr = ko.observable(`#${tagObj.text}`);
         this.selected = ko.observable(false);
-        this.url = ko.observable("https://cakes.abra.me?tags=" + this.text().slice(1).split(" ").join("+"));
+        this.url = ko.observable(`${domen}?tags=` + this.text().slice(1).split(" ").join("+"));
     } 
 }
 
@@ -17,6 +19,7 @@ class Step {
 
 class Ingredinet {
     constructor(ingredientObj=null, basicWeight=ko.observable(1), totalWeight=ko.observable(1)) {
+        console.log(ingredientObj)
         this.title = ko.observable(ingredientObj.title);
         this.basicQuantityUnits = ko.observable(ingredientObj.quantity_units);
         this.unit = ko.observable(ingredientObj.unit);
@@ -71,7 +74,7 @@ class Ingredinet {
 class RecipeCard {
     constructor(recipeCardObj=null, selectedTags) {
         this.id = ko.observable(recipeCardObj.id ? recipeCardObj.id : null);
-        this.url = ko.observable(`https://cakes.abra.me/recipe?id=${this.id()}`);
+        this.url = ko.observable(`${domen}/recipe.html?id=${this.id()}`);
         this.title = ko.observable(recipeCardObj.title);
         this.imgSm = ko.observable(recipeCardObj.img_small ? `https://cakes.abra.me${recipeCardObj.img_small}` : null);
         this.hasImg = ko.observable(this.imgSm != null);
@@ -96,7 +99,7 @@ class RecipeCard {
 class Recipe {
     constructor(recipeObj=null) {
         this.id = ko.observable(recipeObj.id ? recipeObj.id : null);
-	    this.url = ko.observable(`https://cakes.abra.me/recipe?id=${this.id()}`);
+	    this.url = ko.observable(`${domen}/recipe?id=${this.id()}`);
         this.title = ko.observable(recipeObj.title);
         this.ownerEmail = ko.observable(recipeObj.ownerEmail);
         this.isPublic = ko.observable(true);
@@ -143,7 +146,7 @@ class Recipe {
         this.totalCost = ko.computed(() => this.ingredients().map(ingredient => ingredient().currentCost()).reduce((prev, next) => prev + next, 0).toFixed(2));
         this.totalCostPerGram = ko.computed(() => this.ingredients().map(ingredient => ingredient().costPerGram()).reduce((prev, next) => prev + next, 0).toFixed(2));
         
-        this.changeUrl = ko.observable("https://cakes.abra.me/change_recipe?id=" + this.id());
+        this.changeUrl = ko.observable(`${domen}/change_recipe?id=${this.id()}`);
         this.recipeIsShown = ko.observable(true);
         this.stepsAreShown = ko.observable(false);
         this.showStepsBtnName = ko.computed(() => this.stepsAreShown() ? "Скрыть рецепт" : "Показать рецепт");

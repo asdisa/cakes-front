@@ -1,14 +1,19 @@
-function getUrlParameterDecodedValue(param) {
-	var urlEnding = window.location.search.substring(1);
-	var urlParams =  urlEnding.split('&');
-	for (var i = 0; i < urlParams.length; i++) {
-		var paramPair = urlParams[i].split('=');
+function getUrlParameterInitialValue(param) {
+	let urlEnding = window.location.search.substring(1);
+	let urlParams =  urlEnding.split('&');
+	for (let i = 0; i < urlParams.length; i++) {
+		let paramPair = urlParams[i].split('=');
 		if (paramPair[0] == param) {
-			var paramVal = decodeURI(paramPair[1]).split("+").join(" ");
-			if (!isNaN(paramVal)) {
-				return parseInt(paramVal);
-			}
+			let paramVal = decodeURI(paramPair[1]).split("+").join(" ");
+			return paramVal;
 		}
 	}
-	return undefined;
+	return null;
 }
+
+
+function getUrlParameterDecodedValue(param) {
+	let paramValue = getUrlParameterInitialValue(param);
+	return !isNaN(paramValue) ? parseInt(paramValue) : null;
+}
+

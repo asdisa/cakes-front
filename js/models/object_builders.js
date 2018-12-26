@@ -7,6 +7,16 @@ class TagBuilder {
         return tagObj;
     }
 
+    fromDisaSchema(text) {
+        let tagObj = new TagObj();
+        tagObj.text = text;
+        return tagObj;
+    }
+
+    toDisaSchema(tag) {
+        return tag().text();
+    }
+
     toAbraSchema(tag) {
         return tag().text();
     }
@@ -23,6 +33,13 @@ class StepBuilder {
         return stepObj;
     }
 
+    fromDisaSchema(disaStep, ordinal) {
+        let stepObj = new StepObj();
+        stepObj.ordinal = ordinal;
+        stepObj.text = disaStep;
+        return stepObj;
+    }
+
     toAbraSchema(step) {
         const abraStepObj = {
             "ordinal": step().ordinal(),
@@ -30,10 +47,22 @@ class StepBuilder {
         }
         return abraStepObj;
     }
+
+    toDisaSchema(step) {
+        return step().text();
+    }
 }
 
 class IngredientBuilder {
-    constructor() {  }
+    constructor() { 
+        this.disaUnitDict = {
+            "4": {
+                "short_name": "г",
+                "full_name": "грамм",
+                "weight_in_grams": 1.0
+            }
+        }
+    }
 
     fromAbraSchema(abraIngredient) {
         let ingredientObj = new IngredinetObj();
@@ -42,6 +71,19 @@ class IngredientBuilder {
         ingredientObj.unit = abraIngredient.unit;
         ingredientObj.cost_per_gram = abraIngredient.cost_per_gram;
         ingredientObj.quantity_grams = abraIngredient.quantity_grams;
+        return ko.observable(ingredientObj);
+    }
+
+    fromDisaSchema(disaIngredient) {
+        console.log(disaIngredient);
+        let ingredientObj = new IngredinetObj();
+        const unit = this.disaUnitDict[String(disaIngredient.ingredient.unit)];
+
+        ingredientObj.title = disaIngredient.ingredient.name;
+        ingredientObj.quantity_units = disaIngredient.amount_in_units;
+        ingredientObj.unit = unit.short_name;
+        ingredientObj.cost_per_gram = disaIngredient.ingredient.price_per_gram;
+        ingredientObj.quantity_grams = unit.weight_in_grams;
         return ko.observable(ingredientObj);
     }
 
@@ -57,6 +99,18 @@ class IngredientBuilder {
         }
         return abraIngredientObj;
     }
+
+    toDisaSchema(ingredient) {
+        const disaIngredientObj = {
+            "ingredient": {
+                "name": ingredient().title(),
+                "price_per_gram": ingredient().costPerGram(),
+                "unit": 4
+            },
+            "amount_in_units": ingredient().basicQuantityUnits(),
+        }
+        return disaIngredientObj;
+    }
 }
 
 class RecipeCardBuilder {
@@ -66,14 +120,27 @@ class RecipeCardBuilder {
 
     fromAbraSchema(abraRecipeCard) {
         let recipeCardObj = new RecipeCardObj();
-        recipeCardObj.id = abraRecipeCard.id;
-        recipeCardObj.id = abraRecipeCard.id;
+        recipeCardObj.id = abraRecipeCard.id;   
         recipeCardObj.title = abraRecipeCard.title;
         recipeCardObj.is_public = abraRecipeCard.is_public;
         recipeCardObj.img_small = abraRecipeCard.img_small;
 
         for (let abraTag of abraRecipeCard.tags) {
             recipeCardObj.tags.push(this.tagBuilder.fromAbraSchema(abraTag));
+        }
+
+        return recipeCardObj;
+    }
+
+    fromDisaSchema(disaRecipe) {
+        let recipeCardObj = new RecipeCardObj();
+        recipeCardObj.id = disaRecipe.id;
+        recipeCardObj.title = disaRecipe.title;
+        recipeCardObj.is_public = true;
+        recipeCardObj.img_small = disaRecipe.image_container.img_small.slice(21);
+
+        for (let abraTag of disaRecipe.tags) {
+            recipeCardObj.tags.push(this.tagBuilder.fromDisaSchema(abraTag));
         }
 
         return recipeCardObj;
@@ -114,6 +181,39 @@ class RecipeBuilder {
         return recipeObj;
     }
  
+    fromDisaSchema(disaRecipe=null) {
+        let recipeObj = new RecipeObj();
+        if (!disaRecipe) {
+            return ko.observable(new Recipe(recipeObj));
+        }
+
+        recipeObj.id = disaRecipe.id;
+        recipeObj.title = disaRecipe.title;
+        recipeObj.img_small = disaRecipe.image_container.img_small.substr(21);
+        recipeObj.img_medium = disaRecipe.image_container.img_medium.substr(21);
+        recipeObj.img_large = disaRecipe.image_container.img_large.substr(21);
+        recipeObj.total_quantiy_grams = 0;
+        for (let ingredient of disaRecipe.ingredients) {
+            recipeObj.total_quantiy_grams += ingredient["amount_in_units"];
+        }
+        recipeObj.total_cost_per_gram = disaRecipe.ingredients.reduce((sum, i2) => sum + i2["ingredient"]["price_per_gram"], 0);
+        recipeObj.total_cost = recipeObj.total_quantiy_grams * recipeObj.total_cost_per_gram;
+        
+        for (let abraTag of disaRecipe.tags) {
+            recipeObj.tags.push(this.tagBuilder.fromDisaSchema(abraTag));
+        }
+
+        for (let i = 0; i< disaRecipe.steps.length; i++) {
+            recipeObj.steps.push(this.stepBuilder.fromDisaSchema(disaRecipe.steps[i], i));
+        }
+
+        for (let abraIngredient of disaRecipe.ingredients) {
+            recipeObj.ingredients.push(this.ingredientBuilder.fromDisaSchema(abraIngredient));
+        }
+
+        return recipeObj;
+    }
+
     toAbraSchema(recipe) {
         let abraTags = [];
         for (let tag of recipe().tags()) {
@@ -149,5 +249,43 @@ class RecipeBuilder {
             abraRecipeObj.img_large = recipe().imgLg().substr(21);
         }
         return abraRecipeObj;
+    }
+
+    toDisaSchema(recipe) {
+        let disaTags = [];
+        for (let tag of recipe().tags()) {
+            disaTags.push(this.tagBuilder.toDisaSchema(tag));
+        }
+
+        let disaIngredients = [];   
+        for (let ingredient of recipe().ingredients()) {
+            disaIngredients.push(this.ingredientBuilder.toDisaSchema(ingredient));
+        }
+
+        let disaSteps = [];
+        for (let step of recipe().steps()) {
+            disaSteps.push(this.stepBuilder.toDisaSchema(step));
+        }
+
+        const disaRecipeObj = {
+            "title": recipe().title(),
+            "tags": disaTags,
+            "ingredients": disaIngredients,
+            "steps": disaSteps,
+        }
+
+        if (recipe().id() !== null) {
+            disaRecipeObj.id = recipe().id();
+        }
+
+        let image_container = {};
+        if (recipe().imgSm() !== null) {
+            image_container.img_small = recipe().imgSm().substr(21);
+            image_container.img_medium = recipe().imgMd().substr(21);
+            image_container.img_large = recipe().imgLg().substr(21);
+            disaRecipeObj.image_container = image_container;
+        }
+
+        return disaRecipeObj;
     }
 }
