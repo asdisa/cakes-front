@@ -88,9 +88,7 @@ class RecipeCard {
         };
         this.checkTags = ko.computed(() => {
             for (let tag of this.tags()) {
-                if(selectedTags().includes(tag().text())){
-                    tag().selected(true);
-                } else { tag().selected(false); }
+                tag().selected(selectedTags().includes(tag().text()));
             }
         });
     }

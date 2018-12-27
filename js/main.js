@@ -2,6 +2,7 @@ $(document).ready(function() {
 
 	let recipeCardObjects = [];
 	const recipeCardBuilder = new RecipeCardBuilder();
+	/*
 	$.getJSON("http://127.0.0.1:8000/api/recipes/", data => {
 		const disaRecipeObjects = data;
 		for (disaRecipeObject of disaRecipeObjects) {
@@ -11,7 +12,8 @@ $(document).ready(function() {
 		var VM = new ViewModel(recipeCardObjects);
 		ko.applyBindings(VM);
 	});
-	/*
+	*/
+	///*
 	$.getJSON("https://cakes.abra.me/api/v2/recipe/all", data => {
 		if (data.status === "ok") {
 			const allRecipeCards = data.recipes;
@@ -23,7 +25,7 @@ $(document).ready(function() {
 		var VM = new ViewModel(recipeCardObjects);
 		ko.applyBindings(VM);
 	});
-	*/
+	//*/
 
 	let ViewModel = function(recipeCardObjects) {
 		self = this;
@@ -32,16 +34,20 @@ $(document).ready(function() {
 		this.shownRecipes = ko.observableArray();
 		this.canShowMoreRecipes = ko.observable(true);
 		this.selectedTags = ko.observableArray();
-
-
+		
+		if(getUrlParameterInitialValue("tags") != null){
+			this.selectedTags(getUrlParameterInitialValue("tags").split(','));
+			for (let i = 0; i < this.selectedTags().length; i++) {
+				this.selectedTags()[i] = '#' + this.selectedTags()[i];
+			}
+		}
 		this.selectTag = (tag) => {
-			let checkSelectTag = this.selectedTags().indexOf(tag);
-			this.selected(!this.selected());
-			if (checkSelectTag == -1){
+			let selectedTagIndex = this.selectedTags().indexOf(tag);
+			if (selectedTagIndex == -1){
 				this.selectedTags.push(tag);
 			}
 			else {
-				this.selectedTags.splice(checkSelectTag, 1);
+				this.selectedTags.splice(selectedTagIndex, 1);
 			}
 		}
 
